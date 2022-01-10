@@ -6,7 +6,7 @@
 /*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 16:57:28 by sazelda           #+#    #+#             */
-/*   Updated: 2022/01/07 19:15:57 by sazelda          ###   ########.fr       */
+/*   Updated: 2022/01/10 10:11:49 by sazelda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 #define MAX(a, b) (a > b ? a : b)
 #define MOD(a) (a < 0 ? -a : a)
 
-void ft_3d(float *x, float *y, int z)
+void ft_3d(float *x, float *y, int z, t_fdf *data)
 {
-	*x = (*x - *y) * cos(0.8);
-	*y = (*x + *y) * sin(0.8) - z;
+	*x = (*x - *y) * cos(data->angle);
+	*y = (*x + *y) * sin(data->angle) - z;
 }
 
 static void	ft_bresenham(float x, float y, float x1, float y1, t_fdf *data)
@@ -39,8 +39,8 @@ static void	ft_bresenham(float x, float y, float x1, float y1, t_fdf *data)
 	y1 *= data->zoom;
 
 	data->color = (z || z1) ? 0xe80c0c : 0xffffff;
-	ft_3d(&x, &y, z);
-	ft_3d(&x1, &y1, z1);
+	ft_3d(&x, &y, z, data);
+	ft_3d(&x1, &y1, z1, data);
 
 	x += data->shift_x;
 	y += data->shift_y;
