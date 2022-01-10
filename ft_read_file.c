@@ -6,7 +6,7 @@
 /*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 16:42:53 by sazelda           #+#    #+#             */
-/*   Updated: 2022/01/10 17:49:35 by sazelda          ###   ########.fr       */
+/*   Updated: 2022/01/10 18:55:48 by sazelda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,35 @@ static int	ft_get_width(char *file_name)
 	return (width);
 }
 
+int	ft_get_int(char *a)
+{
+	char	*base;
+	int		i;
+	int		j;
+	int		res;
+	int		step;
+
+	res = 0;
+	step = ft_strlen(a) - 2;
+	printf("step - %d\na - %s\n", step, a);
+	base = "0123456789ABCDEF";
+	i = 2;
+	while (a[i] != '\0')
+	{
+		j = 0;
+		while (base[j] != '\0')
+		{
+			if (a[i] == base[j])
+				break ;
+			j++;
+		}
+		res = res + (j * pow(16, step));
+		step--;
+		i++;
+	}
+	return (res);
+}
+
 static void	ft_create_matrix(char *file_name, t_fdf *data)
 {
 	int		fd;
@@ -68,8 +97,8 @@ static void	ft_create_matrix(char *file_name, t_fdf *data)
 	int		i;
 	int		j;
 
-	data->matrix = (int **)malloc(sizeof(int *) * data->height);
-	data->color_matrix = (char ***)malloc(sizeof(char **) * data->height);
+	data->matrix = (t_z_color ***)malloc(sizeof(t_z_color **) * data->height);
+	//data->color_matrix = (char ***)malloc(sizeof(char **) * data->height);
 	fd = open(file_name, O_RDONLY, 0);
 	if (fd < 0)
 		return ;
@@ -78,17 +107,22 @@ static void	ft_create_matrix(char *file_name, t_fdf *data)
 	{
 		line = get_next_line(fd);
 		numbers = ft_split(line, ' ');
-		data->matrix[i] = (int *)malloc(sizeof(int) * data->width);
-		data->color_matrix[i] = (char **)malloc(sizeof(char *) * data->width);
+		data->matrix[i] = (t_z_color **)malloc(sizeof(t_z_color *) * data->width);
+		//data->color_matrix[i] = (char **)malloc(sizeof(char *) * data->width);
 		j = 0;
 		while (j < data->width)
 		{
 			num_col = ft_split(numbers[j], ',');
-			data->matrix[i][j] = ft_atoi(num_col[0]);
-			if (num_col[1])
-				data->color_matrix[i][j] = num_col[1];
+			data->matrix[i][j] = (t_z_color *)malloc(sizeof(t_z_color));
+			data->matrix[i][j]->z = ft_atoi(num_col[0]);
+			if (num_col[1] != NULL)
+			{
+				//data->matrix[i][j]->color = (char *)malloc(ft_strlen(num_col[1]) + 1);
+				data->matrix[i][j]->color = ft_get_int(num_col[1]);
+				printf("%s - %d\n", num_col[1], data->matrix[i][j]->color);
+			}
 			else
-				data->color_matrix[i][j] = NULL;
+				data->matrix[i][j]->color = 0;
 			free(numbers[j]);
 			j++;
 		}

@@ -6,7 +6,7 @@
 /*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:26:48 by sazelda           #+#    #+#             */
-/*   Updated: 2022/01/10 17:42:35 by sazelda          ###   ########.fr       */
+/*   Updated: 2022/01/10 18:42:39 by sazelda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,20 @@
 
 # include "libft/libft.h"
 # include "minilibx_macos/mlx.h"
+# include <math.h>
+
+typedef struct s_z_color
+{
+	int		z;
+	int		color;
+}	t_z_color;
 
 typedef struct s_fdf
 {
 	int		width;
 	int		height;
-	int		**matrix;
-	char	***color_matrix;
+	t_z_color	***matrix;
+	//char	***color_matrix;
 	int		zoom;
 	int		color;
 	int		shift_x;
@@ -34,5 +41,6 @@ typedef struct s_fdf
 
 void	ft_read_file(char *file_name, t_fdf *data);
 void	draw(t_fdf *data);
+int	ft_get_int(char *a);
 
 #endif
