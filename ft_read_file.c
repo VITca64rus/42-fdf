@@ -6,12 +6,12 @@
 /*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 16:42:53 by sazelda           #+#    #+#             */
-/*   Updated: 2022/01/11 14:44:01 by sazelda          ###   ########.fr       */
+/*   Updated: 2022/01/11 15:14:14 by sazelda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
-//#include <io.h>
+#include <unistd.h>
 #include "fdf.h"
 
 static int	ft_get_height(char *file_name)

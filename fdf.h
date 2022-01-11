@@ -6,7 +6,7 @@
 /*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:26:48 by sazelda           #+#    #+#             */
-/*   Updated: 2022/01/11 14:42:47 by sazelda          ###   ########.fr       */
+/*   Updated: 2022/01/11 14:58:19 by sazelda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define FDF_H
 
 # include "libft/libft.h"
-# include "minilibx_macos/mlx.h"
+# include "mlx.h"
 # include <math.h>
 
 typedef struct s_z_color
