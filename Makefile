@@ -1,7 +1,7 @@
 NAME = fdf
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-SRC  =  	main.c	ft_read_file.c draw.c ft_help.c
+SRC  =  	main.c	ft_read_file.c draw.c ft_help.c ft_create_matrix.c
 
 OBJ = $(patsubst %.c,%.o,$(SRC))
 INCLUDES = push_swap.h

@@ -6,12 +6,10 @@
 /*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 16:42:53 by sazelda           #+#    #+#             */
-/*   Updated: 2022/01/11 15:14:14 by sazelda          ###   ########.fr       */
+/*   Updated: 2022/01/11 17:22:50 by sazelda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <unistd.h>
 #include "fdf.h"
 
 static int	ft_get_height(char *file_name)
@@ -87,49 +85,6 @@ int	ft_get_int(char *a)
 		i++;
 	}
 	return (res);
-}
-
-static void	ft_create_matrix(char *file_name, t_fdf *data)
-{
-	int		fd;
-	char	*line;
-	char	**numbers;
-	char	**num_col;
-	int		i;
-	int		j;
-
-	data->matrix = (t_z_color ***)malloc(sizeof(t_z_color **) * data->height);
-	fd = open(file_name, O_RDONLY, 0);
-	if (fd < 0)
-		return ;
-	i = 0;
-	while (i < data->height)
-	{
-		line = get_next_line(fd);
-		numbers = ft_split(line, ' ');
-		data->matrix[i] = (t_z_color **)malloc(sizeof(t_z_color *) * data->width);
-		j = 0;
-		while (j < data->width)
-		{
-			num_col = ft_split(numbers[j], ',');
-			data->matrix[i][j] = (t_z_color *)malloc(sizeof(t_z_color));
-			data->matrix[i][j]->z = ft_atoi(num_col[0]);
-			if (num_col[1] != NULL)
-				data->matrix[i][j]->color = ft_get_int(num_col[1]);
-			else
-				data->matrix[i][j]->color = 0xffffff;
-			free(numbers[j]);
-			free(num_col[0]);
-			free(num_col[1]);
-			free(num_col);
-			j++;
-		}
-		free(line);
-		free(numbers[j]);
-		free(numbers);
-		i++;
-	}
-	close(fd);
 }
 
 void	ft_read_file(char *file_name, t_fdf *data)

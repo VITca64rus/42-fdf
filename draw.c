@@ -6,7 +6,7 @@
 /*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 16:57:28 by sazelda           #+#    #+#             */
-/*   Updated: 2022/01/11 12:15:45 by sazelda          ###   ########.fr       */
+/*   Updated: 2022/01/11 16:06:49 by sazelda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,23 @@ void	ft_3d(float *x, float *y, int z, t_fdf *data)
 	*y = (*x + *y) * sin(data->angle) - z;
 }
 
-void	ft_make_shift(float *x, float *y, float *x1, float *y1, t_fdf *data)
+void	ft_make_shift(float *a[4], t_fdf *data)
 {
-	*x += data->shift_x;
-	*y += data->shift_y;
-	*x1 += data->shift_x;
-	*y1 += data->shift_y;
+	(*a)[0] += data->shift_x;
+	(*a)[1] += data->shift_y;
+	(*a)[2] += data->shift_x;
+	(*a)[3] += data->shift_y;
 }
 
-void	ft_make_zoom(float *x, float *y, float *x1, float *y1, t_fdf *data)
+void	ft_make_zoom(float *a[4], t_fdf *data)
 {
-	*x *= data->zoom;
-	*y *= data->zoom;
-	*x1 *= data->zoom;
-	*y1 *= data->zoom;
+	(*a)[0] *= data->zoom;
+	(*a)[1] *= data->zoom;
+	(*a)[2] *= data->zoom;
+	(*a)[3] *= data->zoom;
 }
 
-static void	ft_bresenham(float x, float y, float x1, float y1, t_fdf *data)
+void	ft_bresenham(float a[4], t_fdf *data)
 {
 	float	x_step;
 	float	y_step;
@@ -43,30 +43,31 @@ static void	ft_bresenham(float x, float y, float x1, float y1, t_fdf *data)
 	int		z;
 	int		z1;
 
-	data->color = data->matrix[(int)y][(int)x]->color;
-	z = data->matrix[(int)y][(int)x]->z * 10;
-	z1 = data->matrix[(int)y1][(int)x1]->z * 10;
-	ft_make_zoom(&x, &y, &x1, &y1, data);
-	ft_3d(&x, &y, z, data);
-	ft_3d(&x1, &y1, z1, data);
-	ft_make_shift(&x, &y, &x1, &y1, data);
-	x_step = x1 - x;
-	y_step = y1 - y;
+	data->color = data->matrix[(int)a[1]][(int)a[0]]->color;
+	z = data->matrix[(int)a[1]][(int)a[0]]->z * 10;
+	z1 = data->matrix[(int)a[3]][(int)a[2]]->z * 10;
+	ft_make_zoom(&a, data);
+	ft_3d(&(a[0]), &(a[1]), z, data);
+	ft_3d(&(a[2]), &(a[3]), z1, data);
+	ft_make_shift(&a, data);
+	x_step = a[2] - a[0];
+	y_step = a[3] - a[1];
 	max = ft_max(ft_mod(x_step), ft_mod(y_step));
 	x_step /= max;
 	y_step /= max;
-	while ((int)(x - x1) || (int)(y - y1))
+	while ((int)(a[0] - a[2]) || (int)(a[1] - a[3]))
 	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, data->color);
-		x += x_step;
-		y += y_step;
+		mlx_pixel_put(data->mlx_ptr, data->win_ptr, a[0], a[1], data->color);
+		a[0] += x_step;
+		a[1] += y_step;
 	}
 }
 
 void	draw(t_fdf *data)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	float	a[4];
 
 	i = 0;
 	while (i < data->height)
@@ -74,10 +75,7 @@ void	draw(t_fdf *data)
 		j = 0;
 		while (j < data->width)
 		{
-			if (j < data->width - 1)
-				ft_bresenham(j, i, j + 1, i, data);
-			if (i < data->height - 1)
-				ft_bresenham(j, i, j, i + 1, data);
+			ft_full_a(a, i, j, data);
 			j++;
 		}
 		i++;
