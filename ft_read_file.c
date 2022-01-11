@@ -6,11 +6,12 @@
 /*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 16:42:53 by sazelda           #+#    #+#             */
-/*   Updated: 2022/01/11 12:49:52 by sazelda          ###   ########.fr       */
+/*   Updated: 2022/01/11 14:44:01 by sazelda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
+//#include <io.h>
 #include "fdf.h"
 
 static int	ft_get_height(char *file_name)
@@ -32,8 +33,7 @@ static int	ft_get_height(char *file_name)
 		line = get_next_line(fd);
 	}
 	close(fd);
-	if (line)
-		free(line);
+	free(line);
 	return (height);
 }
 
@@ -68,11 +68,9 @@ int	ft_get_int(char *a)
 	int		i;
 	int		j;
 	int		res;
-	int		step;
 
 	res = 0;
-	step = ft_strlen(a) - 2;
-	base = "0123456789ABCDEF";
+	base = "0123456789ABCDEFabcdef";
 	i = 2;
 	while (a[i] != '\0')
 	{
@@ -83,8 +81,9 @@ int	ft_get_int(char *a)
 				break ;
 			j++;
 		}
-		res = res + (j * pow(16, step));
-		step--;
+		if (j > 15)
+			j -= 6;
+		res = res + (j * pow(16, ft_strlen(&a[i]) - 1));
 		i++;
 	}
 	return (res);

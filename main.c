@@ -6,7 +6,7 @@
 /*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:14:44 by sazelda           #+#    #+#             */
-/*   Updated: 2022/01/11 12:49:05 by sazelda          ###   ########.fr       */
+/*   Updated: 2022/01/11 13:36:30 by sazelda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@ void	ft_free_data_struct(t_fdf *data)
 	int	j;
 
 	i = 0;
-	j = 0;
-
-	printf("%d %d", data->height, data->width);
 	while (i < data->height)
 	{
 		j = 0;

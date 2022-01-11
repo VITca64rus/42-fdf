@@ -6,7 +6,7 @@
 /*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:26:48 by sazelda           #+#    #+#             */
-/*   Updated: 2022/01/11 12:16:35 by sazelda          ###   ########.fr       */
+/*   Updated: 2022/01/11 14:42:47 by sazelda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,16 @@ typedef struct s_z_color
 
 typedef struct s_fdf
 {
-	int		width;
-	int		height;
+	int			width;
+	int			height;
 	t_z_color	***matrix;
-	int		zoom;
-	int		color;
-	int		shift_x;
-	int		shift_y;
-	float	angle;
-
-	void	*mlx_ptr;
-	void	*win_ptr;
+	int			zoom;
+	int			color;
+	int			shift_x;
+	int			shift_y;
+	float		angle;
+	void		*mlx_ptr;
+	void		*win_ptr;
 }	t_fdf;
 
 void	ft_read_file(char *file_name, t_fdf *data);
