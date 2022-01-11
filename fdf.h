@@ -6,7 +6,7 @@
 /*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:26:48 by sazelda           #+#    #+#             */
-/*   Updated: 2022/01/10 18:42:39 by sazelda          ###   ########.fr       */
+/*   Updated: 2022/01/11 12:16:35 by sazelda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct s_fdf
 	int		width;
 	int		height;
 	t_z_color	***matrix;
-	//char	***color_matrix;
 	int		zoom;
 	int		color;
 	int		shift_x;
@@ -41,6 +40,8 @@ typedef struct s_fdf
 
 void	ft_read_file(char *file_name, t_fdf *data);
 void	draw(t_fdf *data);
-int	ft_get_int(char *a);
+int		ft_get_int(char *a);
+float	ft_max(float a, float b);
+float	ft_mod(float a);
 
 #endif
